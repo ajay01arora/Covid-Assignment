@@ -1,0 +1,10 @@
+.hand{
+    cursor: pointer;
+}
+.logout
+{
+    margin: 10px;
+    font-weight: bolder;
+    color: cyan;
+    font-size: larger;
+}

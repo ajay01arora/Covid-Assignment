@@ -1,0 +1,37 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" routerLinkActive="active">Covid-App</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="/active">
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      </li>
+      <li>
+        <a routerLink="/news" routerLinkActive="active">Latest News</a>
+      </li>
+      <li>
+        <a *ngIf="currentUser" routerLink="/add-news" routerLinkActive="active">Add News</a>
+      </li>
+      <li>
+        <a routerLink="/precaution" routerLinkActive="active">Precaution</a>
+      </li>  
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li (click)="show=!show">
+          <div *ngIf="currentUser; else notShow">
+                <span (click)="logout()" class="glyphicon glyphicon-log-out hand logout"> Logout </span>
+            </div>            
+            <ng-template #notShow>             
+                <a routerLink="/login" routerLinkActive="active">
+                <span class="glyphicon glyphicon-log-in hand logout">         
+                  Login
+                </span>
+              </a >
+            </ng-template>
+      </li>     
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

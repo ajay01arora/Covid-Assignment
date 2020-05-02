@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+          <h2>Top Headlines <hr></h2>
+        </div>
+        <div class="col-md-12">
+          <ul>
+            <div class="jumbotron" *ngFor="let news of NewsList.slice().reverse()"><a (click)="ViewNews(news.id)">{{ news.newsTitle}}</a></div>
+          </ul>
+        </div>
+  </div>
