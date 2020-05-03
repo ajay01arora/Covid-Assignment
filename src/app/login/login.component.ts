@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
       }
       const loginData = await this.authService.login(this.loginForm.value);
 
-
       if (loginData) {
           console.log("data====", loginData)
           this.router.navigate(['/news']);

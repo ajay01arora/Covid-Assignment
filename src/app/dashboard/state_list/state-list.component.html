@@ -6,12 +6,14 @@
               <tr>
                 <th>State Name</th>
                 <th>State Code</th>
+                <th>Total Cases</th>
               </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let state of StateList">
                     <td><button (click)="viewStateDetails(state.stateCode)" class="stateName">{{state.stateName}}</button></td>
                     <td>{{ state.stateCode}}</td>
+                    <td>{{ state | casesConverter}}</td>
                 </tr>                             
             </tbody>
           </table>

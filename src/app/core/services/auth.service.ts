@@ -33,7 +33,7 @@ import {
  
    let user = userData,
     loginSuccess = false;
-   const adminUser = await this.http.get < any > (`${this.npointBaseUrl}`).toPromise();
+   const adminUser = await this.http.get<any>(`${this.npointBaseUrl}`).toPromise();
  
    adminUser.contents.map((data) => {
     console.log("adminUser.contents", data);

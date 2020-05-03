@@ -27,28 +27,33 @@ export class StateListComponent implements OnInit {
 
 
 ngOnInit() {
-  this.dataServiceSubscribe = this.cases_data.getStateDetails().subscribe((data) =>{ 
+    this.getCaseData();
+  }
 
-     console.log("data===",data);
+  getCaseData()
+  {
+    this.dataServiceSubscribe = this.cases_data.getStateDetails().subscribe((data) =>{ 
 
-      for(var state in data)
-      {
-        let districtList = new Array<IDistrict>();
-          for (let district in data[state].districtData)
-          {        
-              districtList.push(
-                {
-                  districtName :district, 
-                  totalCases: data[state].districtData[district].confirmed,
-                active: data[state].districtData[district].active,
-                recovered: data[state].districtData[district].recovered, 
-                deceased : data[state].districtData[district].deceased 
-              });
-          }          
-          this.StateList.push({stateName:state,stateCode: data[state].statecode,districtList: districtList});
-      }
-      console.log("stateList====",this.StateList)
-    });
+      console.log("data===",data);
+ 
+       for(var state in data)
+       {
+         let districtList = new Array<IDistrict>();
+           for (let district in data[state].districtData)
+           {        
+               districtList.push(
+                 {
+                   districtName :district, 
+                   totalCases: data[state].districtData[district].confirmed,
+                 active: data[state].districtData[district].active,
+                 recovered: data[state].districtData[district].recovered, 
+                 deceased : data[state].districtData[district].deceased 
+               });
+           }          
+           this.StateList.push({stateName:state,stateCode: data[state].statecode,districtList: districtList});
+       }
+       console.log("stateList====",this.StateList)
+     });
   }
 
   ngOnDestroy() {

@@ -24,10 +24,10 @@ export class AddNewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.newsForm = this.fb.group({
-      newsTitle : ["", [Validators.required, Validators.minLength(10)]],
-      description : ["", [Validators.required, Validators.minLength(10)]],
-      image_link : ["", [Validators.required, Validators.minLength(10)]],
-      full_news : ["", [Validators.required, Validators.minLength(10)]]
+      newsTitle : ["", [Validators.required, Validators.minLength(50)]],
+      description : ["", [Validators.required, Validators.minLength(500)]],
+      image_link : ["", [Validators.required]],
+      full_news : ["", [Validators.required, Validators.minLength(3000)]]
     });
 
   }

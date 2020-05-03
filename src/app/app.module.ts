@@ -10,6 +10,7 @@ import { DistrictListComponent } from './dashboard/district-list/district-list.c
 import { LoginComponent } from './login/login.component';
 
 import { AuthGuard} from './guards/auth.guard';
+import { CasesConverter } from './dashboard/state_list/sum-districts-cases.pipe';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AuthGuard} from './guards/auth.guard';
     AppComponent,
     RoutingComponents,
     DistrictListComponent,
-    LoginComponent
+    LoginComponent,
+    CasesConverter
   
   ],
   imports: [

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthService } from '../core/services/auth.service';
 import { DebugElement } from '@angular/core';
 import { By, BrowserModule } from '@angular/platform-browser';
@@ -12,7 +12,10 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let de : DebugElement;
   let el : HTMLElement;
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  let authService: AuthService;
+  let httpMock: HttpTestingController;
+  let formBuilder : FormBuilder;
+  
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,44 +34,43 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    authService = TestBed.get(AuthService);
+    httpMock = TestBed.get(HttpTestingController);
+    formBuilder = TestBed.get(FormBuilder);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should set submitted to true', (done)=>{
-    
+  it('should login successfully through form data', (done)=>{   
+    component.ngOnInit();
     component.loginForm.controls['userid'].setValue('admin');
     component.loginForm.controls['password'].setValue('admin@123');
-    component.login();
-    expect(component.submitted).toBeTruthy();
+    
+    let loginStatus = authService.login(component.loginForm.value).then(data=> {
+      expect(data).toBeTruthy();
+      done();
+    });
+      let newsRequest = httpMock.expectOne('https://www.npoint.io/documents/680bba8d293902089d18');
+    newsRequest.flush({contents: [{userId:'admin', password:'admin@123'}]});
+    httpMock.verify();
+    
+    done
+  });  
+  
+  it('should login failed when wrong data submitted', (done)=>{   
+    component.ngOnInit();
+    component.loginForm.controls['userid'].setValue('admin');
+    component.loginForm.controls['password'].setValue('admi123');
+    
+    let loginStatus = authService.login(component.loginForm.value).then(data=> {
+      expect(data).toBeFalsy();
+      done();
+    });
+      let newsRequest = httpMock.expectOne('https://www.npoint.io/documents/680bba8d293902089d18');
+    newsRequest.flush({contents: [{userId:'admin', password:'admin@123'}]});
+    httpMock.verify();
+    
     done
   });  
 
-  it('should call the onlogin method'), (done) =>{
-    fixture.detectChanges();
-    spyOn(component,'login');
-    el = fixture.debugElement.query(By.css('button')).nativeElement;
-    el.click();
-    expect(component.login).toHaveBeenCalledTimes(0);
-    done
-  };
 
-  it('form should be invalid'), (done) =>{
-    component.loginForm.controls['userid'].setValue('');
-    component.loginForm.controls['password'].setValue('');
-    expect(component.loginForm.valid).toBeFalsy();
-    done
-  };
-
-  it('form should be valid'), (done) =>{
-    component.loginForm.controls['userid'].setValue('admin');
-    component.loginForm.controls['password'].setValue('admin@123');
-    expect(component.loginForm.valid).toBeTruthy();
-    done
-
-  };
 
 });
